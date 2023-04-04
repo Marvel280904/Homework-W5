@@ -99,7 +99,7 @@ namespace Homework_W5
                         {
                             tampilproduk.Rows.Add(b[0], b[1], b[2], b[3], b[4]);
                         }
-                    }
+                    }     
                 }
             }
             databarang.DataSource = tampilproduk;
@@ -114,6 +114,7 @@ namespace Homework_W5
             }
             else
             {
+                nampung = 0;
                 foreach (DataRow a in kategori.Rows)
                 {
                     c = Convert.ToInt32(a[0].ToString().Substring(1));
@@ -163,6 +164,7 @@ namespace Homework_W5
             }
             else
             {
+                n = 0;
                 foreach (DataRow a in simpanproduk.Rows)
                 {
                     if (detailnama.Text[0].ToString().ToUpper() == a[0].ToString()[0].ToString())
@@ -253,7 +255,27 @@ namespace Homework_W5
                     simpanproduk.Rows.RemoveAt(edit);
                 }
                 else
-                {     
+                {
+                    n = 0;
+                    foreach (DataRow a in simpanproduk.Rows)
+                    {
+                        if (detailnama.Text[0].ToString().ToUpper() == a[0].ToString()[0].ToString())
+                        {
+                            c = Convert.ToInt32(a[0].ToString().Substring(1));
+                            if (c >= n)
+                            {
+                                n = c;
+                            }
+                        }
+                    }
+                    n += 1;
+                    idbarang = detailnama.Text[0].ToString().ToUpper();
+                    for (int i = n.ToString().Length; i < 3; i++)
+                    {
+                        idbarang += "0";
+                    }
+                    idbarang += Convert.ToString(n);
+                    simpanproduk.Rows[edit][0] = idbarang;
                     simpanproduk.Rows[edit][1] = detailnama.Text;
                     simpanproduk.Rows[edit][2] = detailharga.Text;
                     simpanproduk.Rows[edit][3] = detailstock.Text;
@@ -274,7 +296,7 @@ namespace Homework_W5
         {
             foreach (DataRow a in simpanproduk.Rows)
             {
-                if (hapus == a[0])
+                if (hapus == a[0].ToString())
                 {
                     simpanproduk.Rows.Remove(a);
                     break;
